@@ -99,7 +99,7 @@ const Game = ({ questions }) => {
         <h1 className="question-title">{currentQuestion.question}</h1>
 
         <div className="answers-container">
-          {currentQuestion.options.map((option) => (
+          {currentQuestion.options.map((option, index) => (
             <button
               key={option._id}
               className="answer-button"
@@ -109,7 +109,7 @@ const Game = ({ questions }) => {
               }}
             >
               <img src={images[index]} alt={`Icono ${index}`} width="30px" style={{ marginRight: '10px' }} />
-              {answer}
+              {option.text}
             </button>
           ))}
         </div>

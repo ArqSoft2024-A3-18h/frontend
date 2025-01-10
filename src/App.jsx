@@ -6,6 +6,7 @@ const formManagementUrl = import.meta.env.VITE_FORM_MANAGEMENT_URL;
 function App() {
 
   const [questions, setQuestions] = useState([]);
+  const [showStartScreen, setShowStartScreen] = useState(true);
 
   useEffect(()=> {
 
@@ -21,6 +22,10 @@ function App() {
   useEffect(()=>{
     console.log(questions)
   },[questions])
+
+  const handleStartClick = () => {
+    setShowStartScreen(false); // Ocultar la pantalla inicial al hacer clic en "Comenzar"
+  };
 
   // Example of a question returned:
   // {
@@ -52,23 +57,17 @@ function App() {
   //   "createdAt": "2025-01-10T03:48:21.857Z",
   //   "__v": 0
   // }
-  // Ejemplo de datos de preguntas para probar el componente
-  const sampleQuestions = [
-    {
-      question: '¿Quién fundó Facebook?',
-      answers: ['Mark Zuckerberg', 'Bill Gates', 'Elon Musk', 'Steve Jobs'],
-      correctAnswer: 'Mark Zuckerberg',
-    },
-    {
-      question: '¿Qué lenguaje utiliza React?',
-      answers: ['JavaScript', 'Python', 'C++', 'Java'],
-      correctAnswer: 'JavaScript',
-    },
-  ];
   
   return (
     <div className="App">
-      <Game questions={questions} />
+      {showStartScreen ? (
+        <div className="start-screen">
+          <h1>Welcome</h1>
+          <button onClick={handleStartClick}>Comenzar</button>
+        </div>
+      ) : (
+        <Game questions={questions} />
+      )}
     </div>
   );
 }
