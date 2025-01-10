@@ -60,9 +60,9 @@ const Game = ({ questions }) => {
     }, 1000);
   };
 
-  const handleAnswerClick = (selectedAnswer) => {
+  const handleAnswerClick = (selectedOption) => {
     clearInterval(timerRef.current);
-    const isCorrect = selectedAnswer === questions[currentQuestionIndex].correctAnswer;
+    const isCorrect = selectedOption.isAnswer;
     if (isCorrect) {
       setPopupMessage('Correctooo! :)');
       setPopupImage('/images/macaco_feliz.jpg');
@@ -99,13 +99,13 @@ const Game = ({ questions }) => {
         <h1 className="question-title">{currentQuestion.question}</h1>
 
         <div className="answers-container">
-          {currentQuestion.answers.map((answer, index) => (
+          {currentQuestion.options.map((option) => (
             <button
-              key={index}
+              key={option._id}
               className="answer-button"
               style={{ backgroundColor: colors[index] }}
               onClick={() => {
-                handleAnswerClick(answer);
+                handleAnswerClick(option);
               }}
             >
               <img src={images[index]} alt={`Icono ${index}`} width="30px" style={{ marginRight: '10px' }} />
