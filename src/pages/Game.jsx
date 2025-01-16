@@ -96,7 +96,7 @@ const Game = ({ questions }) => {
           <WhiteLinearProgress variant="determinate" value={progress} />
         </Box>
 
-        <h1 className="question-title">{currentQuestion.question}</h1>
+        <h1 className="question-title">{currentQuestion.text}</h1>
 
         <div className="answers-container">
           {currentQuestion.options.map((option, index) => (
