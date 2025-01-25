@@ -1,31 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import Game from './pages/Game';
+import { gql, useQuery } from "@apollo/client";
+import React, { useState } from "react";
+import Game from "./pages/Game";
 
-const formManagementUrl = import.meta.env.VITE_FORM_MANAGEMENT_URL;
-
-function App() {
-
-  const [questions, setQuestions] = useState([]);
-  const [showStartScreen, setShowStartScreen] = useState(true);
-
-  useEffect(()=> {
-
-    const fetchQuestions = async () => {
-      const call = await fetch(`${formManagementUrl}/question`);
-      const questions = (await call.json()).questions;
-
-      setQuestions(questions)
+const GET_QUESTIONS = gql`
+  query GetQuestions {
+    questions {
+      _id
+      text
+      rawData
+      options {
+        _id
+        text
+        isAnswer
+      }
+      createdAt
     }
-    fetchQuestions()
-  },[])
+  }
+`;
 
-  useEffect(()=>{
-    console.log(questions)
-  },[questions])
-
-  const handleStartClick = () => {
-    setShowStartScreen(false); // Ocultar la pantalla inicial al hacer clic en "Comenzar"
-  };
 
   // Example of a question returned:
   // {
@@ -58,6 +50,23 @@ function App() {
   //   "__v": 0
   // }
   
+
+
+function App() {
+  const [showStartScreen, setShowStartScreen] = useState(true);
+
+  // Usar la consulta con Apollo Client
+  const { loading, error, data } = useQuery(GET_QUESTIONS);
+
+  const handleStartClick = () => {
+    setShowStartScreen(false); // Ocultar la pantalla inicial al hacer clic en "Comenzar"
+  };
+
+  if (loading) return <p>Cargando preguntas...</p>;
+  if (error) return <p>Error al cargar preguntas: {error.message}</p>;
+  if (!data || !data.questions || data.questions.length === 0)
+    return <p>No se encontraron preguntas.</p>;
+
   return (
     <div className="App">
       {showStartScreen ? (
@@ -66,7 +75,7 @@ function App() {
           <button onClick={handleStartClick}>Comenzar</button>
         </div>
       ) : (
-        <Game questions={questions} />
+        <Game questions={data.questions} />
       )}
     </div>
   );

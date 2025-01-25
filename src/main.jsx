@@ -1,10 +1,19 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+import React from "react";
+import { createRoot } from "react-dom/client";
+import { ApolloProvider } from "@apollo/client";
+import App from "./App";
+import client from "apolloClient";
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+// Obtén el contenedor principal de tu aplicación
+const container = document.getElementById("root");
+
+// Usa createRoot para renderizar tu aplicación
+const root = createRoot(container);
+
+root.render(
+  <React.StrictMode>
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  </React.StrictMode>
+);
