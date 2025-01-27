@@ -19,12 +19,17 @@ const Game = ({ questions }) => {
   const images = ['/icons/circle.svg', '/icons/square.svg', '/icons/triangle.svg', '/icons/x.svg'];
   const colors = ['#FF4DF5', '#00E676', '#00EFFF', '#FF4D4D'];
 
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Indice de la pregunta actual
+  const [correctAnswers, setCorrectAnswers] = useState(0); // Respuestas correctas
+  const [incorrectAnswers, setIncorrectAnswers] = useState(0); // Respuestas incorrectas
 
   // Modificadores del popup
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
   const [popupImage, setPopupImage] = useState('/images/macaco_triste.jpg');
+
+  // Modal de resultados
+  const [showResults, setShowResults] = useState(false);
 
   // Barra de progreso del tiempo
   const [progress, setProgress] = useState(100);
@@ -66,9 +71,11 @@ const Game = ({ questions }) => {
     if (isCorrect) {
       setPopupMessage('Correctooo! :)');
       setPopupImage('/images/macaco_feliz.jpg');
+      setCorrectAnswers((prev) => prev + 1); // Incrementar correctas
     } else {
       setPopupMessage('Falso :(');
       setPopupImage('/images/macaco_triste.jpg');
+      setIncorrectAnswers((prev) => prev + 1); // Incrementar incorrectas
     }
     setShowPopup(true);
 
@@ -82,8 +89,7 @@ const Game = ({ questions }) => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      alert('¡Has completado todas las preguntas!');
-      // Aquí podrías manejar un final de juego
+      setShowResults(true); // Mostrar el modal de resultados
     }
   };
 
@@ -91,7 +97,7 @@ const Game = ({ questions }) => {
 
   return (
     <div className="app-container">
-      <div className={`question-screen ${showPopup ? 'blur-background' : ''}`}>
+      <div className={`question-screen ${showPopup | showResults ? 'blur-background' : ''}`}>
         <Box sx={{ width: '100%', marginBottom: '20px' }}>
           <WhiteLinearProgress variant="determinate" value={progress} />
         </Box>
@@ -121,6 +127,16 @@ const Game = ({ questions }) => {
           <p>{popupMessage}</p>
         </div>
       )}
+
+      {showResults && (
+        <div className="results-modal">
+          <h2>¡Juego terminado!</h2>
+          <p>Respuestas correctas: {correctAnswers}</p>
+          <p>Respuestas incorrectas: {incorrectAnswers}</p>
+          <button onClick={() => window.location.reload()}>Jugar de nuevo</button>
+        </div>
+      )}
+
     </div>
   );
 };
