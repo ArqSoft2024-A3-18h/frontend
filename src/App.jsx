@@ -64,7 +64,7 @@ function App() {
 
   if (loading) return <p>Cargando preguntas...</p>;
   if (error) return <p>Error al cargar preguntas: {error.message}</p>;
-  if (!data || !data.questions || data.questions.length === 0)
+  if (!data || !data.questions || data.questions.length === 0) // caso en el que data sea undefined
     return <p>No se encontraron preguntas.</p>;
 
   return (

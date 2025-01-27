@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { ApolloProvider } from "@apollo/client";
 import App from "./App";
 import client from "./apolloClient.js";
+import './index.css'
 
 // Obtén el contenedor principal de tu aplicación
 const container = document.getElementById("root");

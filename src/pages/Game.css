@@ -6,50 +6,87 @@
 }
 
 .question-screen {
-    text-align: center;
-    padding: 20px;
-    transition: filter 0.3s;
-  }
-  
-  .question-screen.blur-background {
-    filter: blur(5px); /* Aplica desenfoque */
-  }
-  
-  .question-title {
-    margin-top: 5%;
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: white;
-  }
-  
-  .answers-container {
-    margin-top: 7%;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    width: 100%;
-    
-  }
-  
-  .answer-button {
-    padding: 20px;
-    margin: 5px 0;
-    border-radius: 5px;
-    width: 49%;
-    min-width: 300px;
-    display: flex;
-    align-items: center;
-    border-radius: 10px;
-  }
-  
-  .popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    z-index: 1000;
-  }
+  text-align: center;
+  padding: 20px;
+  transition: filter 0.3s;
+}
+
+.question-screen.blur-background {
+  filter: blur(5px);
+  /* Aplica desenfoque */
+}
+
+.question-title {
+  margin-top: 5%;
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.answers-container {
+  margin-top: 7%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+
+}
+
+.answer-button {
+  padding: 20px;
+  margin: 5px 0;
+  border-radius: 5px;
+  width: 49%;
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  z-index: 1000;
+}
+
+/* para el modal de juego terminado */
+.results-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.results-modal h2 {
+  margin-bottom: 10px;
+}
+
+.results-modal p {
+  margin: 5px 0;
+}
+
+.results-modal button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #00e676;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.results-modal button:hover {
+  background: #00c853;
+}
