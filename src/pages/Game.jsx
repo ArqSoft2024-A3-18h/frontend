@@ -95,6 +95,8 @@ const Game = ({ questions }) => {
 
   const currentQuestion = questions[currentQuestionIndex];
 
+  console.log(currentQuestion)
+
   return (
     <div className="app-container">
       <div className={`question-screen ${showPopup | showResults ? 'blur-background' : ''}`}>
