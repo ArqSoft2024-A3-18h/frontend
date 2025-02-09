@@ -1,93 +1,26 @@
-import { gql, useQuery } from "@apollo/client";
-import React, { useEffect, useState } from "react";
-import Game from "./pages/Game";
-
-const GET_QUESTIONS = gql`
-  query Forms {
-    forms {
-      name
-      createdAt
-      questions {
-        text
-        createdAt
-        options {
-          text
-          isAnswer
-          createdAt
-        }
-      }
-    }
-  }
-`;
-
-// Example of a question returned:
-// {
-//   "_id": "67809885562c77b3996589f8",
-//   "text": "This is the first question",
-//   "rawData": "6780986e562c77b3996589f4",
-//   "options": [
-//       {
-//           "text": "one",
-//           "isAnswer": false,
-//           "_id": "67809885562c77b3996589f9"
-//       },
-//       {
-//           "text": "two",
-//           "isAnswer": false,
-//           "_id": "67809885562c77b3996589fa"
-//       },
-//       {
-//           "text": "three",
-//           "isAnswer": false,
-//           "_id": "67809885562c77b3996589fb"
-//       },
-//       {
-//           "text": "four",
-//           "isAnswer": true,
-//           "_id": "67809885562c77b3996589fc"
-//       }
-//   ],
-//   "createdAt": "2025-01-10T03:48:21.857Z",
-//   "__v": 0
-// }
+import React from "react";
+import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
+import UserLogueado from "./Router/Router";
 
 function App() {
-  const [showStartScreen, setShowStartScreen] = useState(true);
-
-  // Usar la consulta con Apollo Client
-  const { loading, error, data } = useQuery(GET_QUESTIONS);
-  const [questions, setQuestions] = useState([]);
-  const [title, setTitle] = useState([]);
-
-  useEffect(() => {
-    setQuestions(data?.forms[0]?.questions ?? []);
-    setTitle(data?.forms[0]?.name ?? "");
-    console.log(data?.forms[0]?.questions)
-  }, [data]);
-
-  const handleStartClick = () => {
-    setShowStartScreen(false); // Ocultar la pantalla inicial al hacer clic en "Comenzar"
-  };
-
-  if (loading) return <p>Cargando preguntas...</p>;
-  if (error) return <p>Error al cargar preguntas: {error.message}</p>;
-  if (!data || !questions || questions.length === 0) {
-    return <div className="App">
-      <p>No se encontraron preguntas</p>
-    </div>;
-
-  }
-
+  /**
+   * para LUISDA:
+   * cuando haga lo del login valide el login para acceder a las rutas del admin
+   */
+  const isLogged = true;
   return (
-    <div className="App">
-      {showStartScreen ? (
-        <div className="start-screen">
-          <h1>{title}</h1>
-          <button onClick={handleStartClick}>Comenzar</button>
-        </div>
-      ) : (
-        <Game questions={questions} />
-      )}
+    <div className="app">
+      <BrowserRouter>
+        <Routes>
+          {/* Protege las rutas dentro de '/my' */}
+          {isLogged ? (
+            <Route path='my/*' element={<UserLogueado />} />
+          ) : (
+            <Route path='my/*' element={<Navigate to='/login' />} />
+          )}
+        </Routes>
+        
+      </BrowserRouter>
     </div>
   );
 }
