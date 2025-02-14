@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Box, TextField, Button, Typography, Paper } from "@mui/material";
 
 const NicknamePage = () => {
-  const { pin } = useParams(); // Obtener el PIN desde la URL
+  const { pin } = useParams(); 
   const navigate = useNavigate();
   const [nickname, setNickname] = useState("");
   const [error, setError] = useState(false);
@@ -27,6 +27,7 @@ const NicknamePage = () => {
       }}
     >
       <Paper elevation={3} sx={{ p: 4, width: "100%", maxWidth: 400, textAlign: "center" }}>
+      <img src="/images/logo.png" className="justify-self-center bg-white mb-2" width='80'></img>
         <Typography variant="h5" gutterBottom>
           Ingresar Nickname
         </Typography>

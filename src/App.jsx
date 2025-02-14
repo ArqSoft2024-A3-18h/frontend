@@ -4,6 +4,7 @@ import Router from "./Router/Router";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import NicknamePage from "./pages/NickNamePage";
+import GamePreviewPage from "./pages/GamePreviewPage";
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -38,6 +39,7 @@ function App() {
               <Route path='my/*' element={<Navigate to='/login' />} />
             )}
             <Route path="/game/nickname/:pin" element={<NicknamePage/>} />
+            <Route path="/game/preview/:pin" element={<GamePreviewPage />} />
           </Routes>
           
         </BrowserRouter>
