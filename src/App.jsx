@@ -3,7 +3,7 @@ import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
 import Router from "./Router/Router";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import GamePin from "./pages/GamePin";
+import NicknamePage from "./pages/NickNamePage";
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -37,7 +37,7 @@ function App() {
             ) : (
               <Route path='my/*' element={<Navigate to='/login' />} />
             )}
-            <Route path='/pin' element={<GamePin/>} />
+            <Route path="/game/nickname/:pin" element={<NicknamePage/>} />
           </Routes>
           
         </BrowserRouter>
