@@ -1,86 +1,86 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-
-import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from "@headlessui/react";
-
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 interface fileUploaderProps {
     files:File[]
     setFiles: (newValues) => void
     isOpen: boolean
-    closeModal: () => void
+    setQuestionCount: (value) => void,
+    questionCount: number,
+    createQuestions: () => void
 }
 const FileUploadPopover= ({
     files = [],
     setFiles,
     isOpen = true,
-    closeModal
+    setQuestionCount,
+    questionCount,
+    createQuestions
 }:fileUploaderProps) => {
-    
-    
+    const [error, setError] = useState(false);
     const { getRootProps, getInputProps } = useDropzone({
         onDrop: (acceptedFiles) => setFiles(acceptedFiles),
     });
-    
+    const handleCreateQuestions = () => {
+        if (!questionCount || isNaN(Number(questionCount)) || Number(questionCount) <= 0) {
+          setError(true);
+          return;
+        }
+        
+        setError(false);
+        createQuestions();
+    };
     
     return (
     <>
-        <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
-        <TransitionChild
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
+        <Dialog
+            open={isOpen}
+            onClose={handleCreateQuestions}
         >
-            <div className="fixed inset-0 bg-black/25" />
-        </TransitionChild>
-
-        <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-            <TransitionChild
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-            >
-                <DialogPanel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                    
-                <DialogTitle
-                    as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900 mb-5"
-                >
-                    Selecciona un pdf
-                </DialogTitle>
-                <img src="/images/logo.png" className="justify-self-center" width='80'></img>
-
-                <div {...getRootProps({ className: "border-2 border-dashed p-4 text-center cursor-pointer" })}>
-                <input {...getInputProps()} />
-                <p>Drag & drop a file here, or click to select one</p>
+            <DialogTitle>Selecciona un pdf</DialogTitle>
+            <DialogContent>
+                <img src="/images/logo.png" className="justify-self-center bg-white mb-2" width='80'></img>
+                <div {...getRootProps({ className: "border-2 border-[#FF4DF5] border-dashed p-4 text-center cursor-pointer mb-2 " })}>
+                    <input {...getInputProps()} />
+                    <p>Drag & drop a file here, or click to select one</p>
                 </div>
                 {files.length > 0 && (
-                <div className="mt-4">
-                    <h3 className="font-bold">File seleccionado:</h3>
-                    <ul>
-                    {files.map((file) => (
-                        <li key={file.name}>{file.name}</li>
-                    ))}
-                    </ul>
-                </div>
+                    <div className="mt-4">
+                        <h3 className="font-bold">File seleccionado:</h3>
+                        <ul>
+                        {files.map((file) => (
+                            <li key={file.name}>{file.name}</li>
+                        ))}
+                        </ul>
+                    </div>
                 )}
-
-                </DialogPanel>
-            </TransitionChild>
-            </div>
-        </div>
+                <TextField
+                    autoFocus
+                    required
+                    margin="dense"
+                    id="count"
+                    name="count"
+                    label="Cantidad de preguntas"
+                    type="number"
+                    fullWidth
+                    variant="standard"
+                    onChange={(e) => {
+                        setQuestionCount(parseInt(e.target.value, 10));
+                        setError(false);
+                    }}
+                />
+            </DialogContent>
+            <DialogActions>
+            <Button onClick={handleCreateQuestions}>Crear Form</Button>
+            </DialogActions>
         </Dialog>
-    </Transition>
-    
     </>
     
     );

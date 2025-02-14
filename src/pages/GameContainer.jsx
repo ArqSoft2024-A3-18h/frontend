@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import Game from "./pages/Game";
+import Game from "./Game";
 
 const GET_QUESTIONS = gql`
   query Forms {

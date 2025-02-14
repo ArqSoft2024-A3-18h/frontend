@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -7,35 +6,15 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import { useQuery } from "@apollo/client";
+import { GET_USER_FORMS } from "../utils/queries";
 
-const cards = [
-    {
-      id: 1,
-      title: 'Plants',
-      questionsCount: '10',
-    },
-    {
-      id: 2,
-      title: 'Animals',
-      questionsCount: '15',
-    },
-    {
-      id: 3,
-      title: 'Humans',
-      questionsCount: '5',
-    },
-    {
-        id: 4,
-        title: 'Humans',
-        questionsCount: '2',
-    },
-    {
-        id: 5,
-        title: 'Humans',
-        questionsCount: '30',
-    },
-];
+const USER_ID = "1";
 const Forms = () => {
+    const { data, loading, error } = useQuery(GET_USER_FORMS, {
+        variables: { userId: USER_ID },
+    });
+    const forms = data?.getFormsByUserId || [];
     return(
         <div className="m-4">
             <div className="flex flex-row justify-between items-center mb-4 ">
@@ -51,7 +30,7 @@ const Forms = () => {
                 gap: 2,
             }}
             >
-            {cards.map((card, index) => (
+            {forms.map((form) => (
                 <Card>
                     <CardActionArea
                         sx={{
@@ -66,14 +45,14 @@ const Forms = () => {
                     >
                         <CardContent sx={{ height: '100%' }}>
                             <Typography variant="h5" component="div">
-                                {card.title}
+                                {form.name}
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
-                                {card.questionsCount} preguntas
+                                {form.questions.length} preguntas
                             </Typography>
                             <ButtonGroup variant="text" aria-label="small button group">
-                                <Button>Crear Juego</Button>
-                                <Button color="error">Eliminar</Button>
+                                <Button href="/my/games/new">Crear Juego</Button>
+                                <Button color="secondary">Eliminar</Button>
                             </ButtonGroup>
                         </CardContent>
                     </CardActionArea>

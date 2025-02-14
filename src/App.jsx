@@ -1,7 +1,24 @@
 import React from "react";
 import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
-import UserLogueado from "./Router/Router";
-
+import Router from "./Router/Router";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import GamePin from "./pages/GamePin";
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#00EFFF',
+      light: '#33f2ff',
+      dark: '#00a7b2'
+    },
+    secondary: {
+      main: '#FF4DF5',
+      light: '#ff70f7',
+      dark: '#b235ab'
+    }
+  },
+});
 function App() {
   /**
    * para LUISDA:
@@ -9,19 +26,23 @@ function App() {
    */
   const isLogged = true;
   return (
-    <div className="app">
-      <BrowserRouter>
-        <Routes>
-          {/* Protege las rutas dentro de '/my' */}
-          {isLogged ? (
-            <Route path='my/*' element={<UserLogueado />} />
-          ) : (
-            <Route path='my/*' element={<Navigate to='/login' />} />
-          )}
-        </Routes>
-        
-      </BrowserRouter>
-    </div>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <div className="app">
+        <BrowserRouter>
+          <Routes>
+            {/* Protege las rutas dentro de '/my' */}
+            {isLogged ? (
+              <Route path='my/*' element={<Router />} />
+            ) : (
+              <Route path='my/*' element={<Navigate to='/login' />} />
+            )}
+            <Route path='/pin' element={<GamePin/>} />
+          </Routes>
+          
+        </BrowserRouter>
+      </div>
+    </ThemeProvider>
   );
 }
 
