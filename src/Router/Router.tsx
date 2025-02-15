@@ -4,6 +4,7 @@ import Forms from "../pages/Forms";
 import NewForms from "../pages/NewForms";
 import GameContainer from "../pages/GameContainer";
 import CreateGame from "../pages/CreateGame";
+import Leaderboard from "../pages/Leaderboard";
 
 const Router = () => {
     
@@ -14,6 +15,7 @@ const Router = () => {
             <Route path='forms/new' element={<NewForms/>}/>
             <Route path='games' element={<GameContainer/>}/>
             <Route path='games/new' element={<CreateGame/>}/>
+            <Route path="leaderboard" element={<Leaderboard/>}/>
         </Routes>
         </>
     )
