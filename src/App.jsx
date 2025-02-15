@@ -5,6 +5,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import NicknamePage from "./pages/NickNamePage";
 import GamePreviewPage from "./pages/GamePreviewPage";
+import HomePage from "./pages/HomePage"
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -32,6 +33,9 @@ function App() {
       <div className="app">
         <BrowserRouter>
           <Routes>
+            {/* Página de inicio */}
+            <Route path="/" element={<HomePage />} />
+
             {/* Protege las rutas dentro de '/my' */}
             {isLogged ? (
               <Route path='my/*' element={<Router />} />
