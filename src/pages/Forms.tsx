@@ -8,6 +8,7 @@ import CardActionArea from '@mui/material/CardActionArea';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import { useQuery } from "@apollo/client";
 import { GET_USER_FORMS } from "../utils/queries";
+import { useNavigate } from "react-router-dom";
 
 const USER_ID = "1";
 const Forms = () => {
@@ -15,6 +16,7 @@ const Forms = () => {
         variables: { userId: USER_ID },
     });
     const forms = data?.getFormsByUserId || [];
+    const navigate = useNavigate();
     return(
         <div className="m-4">
             <div className="flex flex-row justify-between items-center mb-4 ">
@@ -51,7 +53,9 @@ const Forms = () => {
                                 {form.questions.length} preguntas
                             </Typography>
                             <ButtonGroup variant="text" aria-label="small button group">
-                                <Button href="/my/games/new">Crear Juego</Button>
+                                <Button onClick={() => navigate(`/my/games/new`, { state: { formName: form.name } })}>
+                                    Crear Juego
+                                </Button>
                                 <Button color="secondary">Eliminar</Button>
                             </ButtonGroup>
                         </CardContent>
