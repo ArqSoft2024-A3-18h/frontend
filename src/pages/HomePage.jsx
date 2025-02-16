@@ -108,10 +108,10 @@ function HomePage() {
             {/* Botones de Login y Register */}
             <div className="flex items-center space-x-4">
               <button className="text-white hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium">
-                Login
+                <a href="/login" style={{color: 'white'}}>Login</a>
               </button>
               <button className="text-white hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium">
-                Register
+                <a href="/register" style={{color: 'white'}}>Register</a>
               </button>
             </div>
           </div>
