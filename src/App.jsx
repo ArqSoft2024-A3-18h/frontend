@@ -6,6 +6,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import NicknamePage from "./pages/NickNamePage";
 import GamePreviewPage from "./pages/GamePreviewPage";
 import HomePage from "./pages/HomePage"
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -35,6 +37,8 @@ function App() {
           <Routes>
             {/* Página de inicio */}
             <Route path="/" element={<HomePage />} />
+            <Route path="login" element={<LoginPage/>}/>
+            <Route path="register" element={<RegisterPage/>}/>
 
             {/* Protege las rutas dentro de '/my' */}
             {isLogged ? (
