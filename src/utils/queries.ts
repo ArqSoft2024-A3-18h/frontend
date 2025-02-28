@@ -47,3 +47,10 @@ export const GET_USER_FORMS = gql`
     }
     }
 `;
+
+export const DELETE_USER_FORMS = gql`
+    mutation DeleteFormById($id: ID!) {
+    deleteFormById(_id: $id)
+    }
+
+`;

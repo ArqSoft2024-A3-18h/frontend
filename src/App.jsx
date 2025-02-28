@@ -20,7 +20,11 @@ const darkTheme = createTheme({
       main: '#FF4DF5',
       light: '#ff70f7',
       dark: '#b235ab'
-    }
+    },
+    background: {
+      default: '#121212',
+    },
+
   },
 });
 function App() {
