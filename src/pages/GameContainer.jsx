@@ -2,11 +2,13 @@ import { gql, useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import Game from "./Game";
 import { GET_QUESTIONS } from "../utils/queries";
-
+import { useLocation } from "react-router-dom";
 
 
 
 function GameContainer() {
+  const location = useLocation();
+  const formId = location.state?.formId;
   const [showStartScreen, setShowStartScreen] = useState(true);
   const ws = new WebSocket('wss://echo.websocket.events');
   // Usar la consulta con Apollo Client
