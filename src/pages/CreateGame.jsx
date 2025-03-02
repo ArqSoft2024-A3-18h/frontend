@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 const CreateGame = () => {
     const location = useLocation();
     const formName = location.state?.formName || "Nuevo Juego";
+    const formId = location.state?.formId ?? "";
     const [emails, setEmails] = useState([]);
     const [inputValue, setInputValue] = useState("");
     const [subject, setSubject] = useState("");

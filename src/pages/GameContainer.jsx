@@ -8,7 +8,7 @@ import { GET_QUESTIONS } from "../utils/queries";
 
 function GameContainer() {
   const [showStartScreen, setShowStartScreen] = useState(true);
-
+  const ws = new WebSocket('wss://echo.websocket.events');
   // Usar la consulta con Apollo Client
   const { loading, error, data } = useQuery(GET_QUESTIONS);
   const [questions, setQuestions] = useState([]);
@@ -32,6 +32,31 @@ function GameContainer() {
     </div>;
 
   }
+  
+
+  useEffect(() => {
+
+    ws.onopen = () => {
+      console.log('Connected to WebSocket server');
+    };
+
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      console.log("WebSocket message received:", data);
+
+      if (data.type === "leaderboard_update") {
+        setLeaderboard(data.leaderboard);
+      }
+    };
+
+    ws.onclose = () => {
+      console.log('WebSocket connection closed');
+    };
+
+    return () => {
+      ws.close();
+    };
+  }, []);
 
   return (
     <div className="App">
