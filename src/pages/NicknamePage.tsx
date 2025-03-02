@@ -19,7 +19,6 @@ const NicknamePage = () => {
     try {
       const { data } = await updateGameByPin({ variables: { pin, nick: nickname } });
       if (data) {
-        const leaderboard = encodeURIComponent(JSON.stringify(data.updateGameByPin.game.leaderboard));
         navigate(`/game/preview/${pin}`,{ state: {
           nickname,
           leaderboard: data.updateGameByPin.game.leaderboard

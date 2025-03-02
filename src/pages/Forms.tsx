@@ -71,7 +71,10 @@ const Forms = () => {
                                 {form.questions.length} preguntas
                             </Typography>
                             <ButtonGroup variant="text" aria-label="small button group">
-                                <Button onClick={() => navigate(`/my/games/new`, { state: { formName: form.name } })}>
+                                <Button onClick={() => navigate(`/my/games/new`, { state: {
+                                     formName: form.name ,
+                                     formId: form._id 
+                                     } })}>
                                     Crear Juego
                                 </Button>
                                 <Button color="secondary" onClick={() => handleDeleteForms(form?._id ?? '')}>Eliminar</Button>
