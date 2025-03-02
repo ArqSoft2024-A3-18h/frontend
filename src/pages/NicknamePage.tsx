@@ -19,6 +19,8 @@ const NicknamePage = () => {
     try {
       const { data } = await updateGameByPin({ variables: { pin, nick: nickname } });
       if (data) {
+        const playerId = data.updateGameByPin.player._id;
+        localStorage.setItem("playerId", playerId);
         navigate(`/game/preview/${pin}`,{ state: {
           nickname,
           leaderboard: data.updateGameByPin.game.leaderboard

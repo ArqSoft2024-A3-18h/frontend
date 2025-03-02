@@ -86,6 +86,7 @@ mutation Mutation($pin: String!, $nick: String!) {
     player {
       score
       nick
+      _id
     }
     game {
       title
