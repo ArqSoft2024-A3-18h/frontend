@@ -26,13 +26,6 @@ const GamePreviewPage: React.FC = () => {
           </p>
         </div>
       </div>
-
-      {/* Botón Start */}
-      <button
-        className="mt-8 bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition-colors"
-      >
-        Start
-      </button>
     </div>
   );
 };
