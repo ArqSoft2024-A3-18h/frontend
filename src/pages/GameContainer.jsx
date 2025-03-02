@@ -1,55 +1,10 @@
 import { gql, useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import Game from "./Game";
+import { GET_QUESTIONS } from "../utils/queries";
 
-const GET_QUESTIONS = gql`
-  query Forms {
-    forms {
-      name
-      createdAt
-      questions {
-        text
-        createdAt
-        options {
-          text
-          isAnswer
-          createdAt
-        }
-      }
-    }
-  }
-`;
 
-// Example of a question returned:
-// {
-//   "_id": "67809885562c77b3996589f8",
-//   "text": "This is the first question",
-//   "rawData": "6780986e562c77b3996589f4",
-//   "options": [
-//       {
-//           "text": "one",
-//           "isAnswer": false,
-//           "_id": "67809885562c77b3996589f9"
-//       },
-//       {
-//           "text": "two",
-//           "isAnswer": false,
-//           "_id": "67809885562c77b3996589fa"
-//       },
-//       {
-//           "text": "three",
-//           "isAnswer": false,
-//           "_id": "67809885562c77b3996589fb"
-//       },
-//       {
-//           "text": "four",
-//           "isAnswer": true,
-//           "_id": "67809885562c77b3996589fc"
-//       }
-//   ],
-//   "createdAt": "2025-01-10T03:48:21.857Z",
-//   "__v": 0
-// }
+
 
 function GameContainer() {
   const [showStartScreen, setShowStartScreen] = useState(true);

@@ -96,3 +96,7 @@
 .results-modal button:hover {
   background: #00c853;
 }
+
+body {
+  background-color: #121212 !important;
+}

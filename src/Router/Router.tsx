@@ -13,7 +13,6 @@ const Router = () => {
         <Routes>
             <Route path='forms' element={<Forms/>}/>
             <Route path='forms/new' element={<NewForms/>}/>
-            <Route path='games' element={<GameContainer/>}/>
             <Route path='games/new' element={<CreateGame/>}/>
             <Route path="leaderboard" element={<Leaderboard/>}/>
         </Routes>

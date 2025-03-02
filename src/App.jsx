@@ -8,6 +8,7 @@ import GamePreviewPage from "./pages/GamePreviewPage";
 import HomePage from "./pages/HomePage"
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import GameContainer from "./pages/GameContainer";
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -20,7 +21,11 @@ const darkTheme = createTheme({
       main: '#FF4DF5',
       light: '#ff70f7',
       dark: '#b235ab'
-    }
+    },
+    background: {
+      default: '#121212',
+    },
+
   },
 });
 function App() {
@@ -48,6 +53,7 @@ function App() {
             )}
             <Route path="/game/nickname/:pin" element={<NicknamePage/>} />
             <Route path="/game/preview/:pin" element={<GamePreviewPage />} />
+            <Route path='game/:pin' element={<GameContainer/>}/>
           </Routes>
           
         </BrowserRouter>

@@ -1,19 +1,33 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Box, TextField, Button, Typography, Paper } from "@mui/material";
+import { PinDrop } from "@mui/icons-material";
+import { useMutation } from "@apollo/client";
+import { UPDATE_GAME_BY_PIN } from "../utils/queries";
 
 const NicknamePage = () => {
   const { pin } = useParams(); 
   const navigate = useNavigate();
   const [nickname, setNickname] = useState("");
   const [error, setError] = useState(false);
-
-  const handleJoinGame = () => {
+  const [updateGameByPin, { loading, error: mutationError }] = useMutation(UPDATE_GAME_BY_PIN);
+  const handleJoinGame = async () => {
     if (!nickname.trim()) {
       setError(true);
       return;
     }
-    navigate(`/game/preview/${pin}?nickname=${encodeURIComponent(nickname)}`);
+    try {
+      const { data } = await updateGameByPin({ variables: { pin, nick: nickname } });
+      if (data) {
+        const leaderboard = encodeURIComponent(JSON.stringify(data.updateGameByPin.game.leaderboard));
+        navigate(`/game/preview/${pin}`,{ state: {
+          nickname,
+          leaderboard: data.updateGameByPin.game.leaderboard
+        }});
+      }
+    } catch (err) {
+      console.error("Error updating game:", err);
+    }
   };
 
   return (

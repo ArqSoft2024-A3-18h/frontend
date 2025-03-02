@@ -1,11 +1,13 @@
 // src/pages/GamePreviewPage.tsx
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 const GamePreviewPage: React.FC = () => {
   // Obtener el parámetro `pin` de la URL
   const { pin } = useParams<{ pin: string }>();
-
+  const location = useLocation();
+  const { nickname, leaderboard } = location.state || {};
+  console.log('leader ', leaderboard)
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-black p-4">
       {/* Título */}

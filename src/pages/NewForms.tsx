@@ -2,7 +2,7 @@ import React , { useEffect, useState } from "react";
 import FileUploadPopover from "./FileUploaderPopover";
 import Loading from "react-loading";
 import pdfToText from 'react-pdftotext';
-import { useLazyQuery, useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_FORM, CREATE_QUESTIONS } from "../utils/queries";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -18,7 +18,8 @@ import {
   Card, 
   CardContent, 
   Typography, 
-  Box
+  Box,
+  ButtonGroup
 } from "@mui/material";
 
 const NewForms = () => {
@@ -32,19 +33,9 @@ const NewForms = () => {
   const [errorName, setErrorName] = useState<boolean>(false);
   const [pdfText, setPdfText] = useState<string>("");
   const [formName, setFormName] = useState<string>("");
-  const [fetchQuestions, { data, loading, error }] = useLazyQuery(CREATE_QUESTIONS, {
-    onCompleted: (data) => {
-      if (data?.createQuestions) {
-        // 🔹 Eliminar __typename tanto de las preguntas como de las opciones
-        const sanitizedQuestions = data.createQuestions.map(({ __typename, options, ...question }) => ({
-          ...question, // Mantiene otras propiedades de la pregunta
-          options: options.map(({ __typename, ...option }) => option), // Elimina __typename de cada opción
-        }));
-  
-        setQuestions(sanitizedQuestions);
-        setIsLoading(false);
-      }
-    },
+  const { data, loading, error, refetch } = useQuery(CREATE_QUESTIONS, {
+    skip: true,
+    fetchPolicy: "network-only",
   });
   const [createForm, {}] = useMutation(CREATE_FORM);
 
@@ -62,9 +53,22 @@ const NewForms = () => {
   }
 
   const handleFetchQuestions = async (content: string, numQuestions: number) => {
-      fetchQuestions({
-        variables: { content, numQuestions },
-      });
+    console.log('entre ', numQuestions)
+    try {
+      const { data } = await refetch({ content, numQuestions });
+      if (data?.createQuestions) {
+        const sanitizedQuestions = data.createQuestions.map(({ __typename, options, ...question }) => ({
+          ...question,
+          options: options.map(({ __typename, ...option }) => option),
+        }));
+  
+        setQuestions(sanitizedQuestions);
+      }
+    } catch (error) {
+      
+    } finally {
+      setIsLoading(false); // Asegurar que loading se apague siempre
+    }
   };
   function closeModal() {
     setIsOpen(false)
@@ -129,7 +133,17 @@ const NewForms = () => {
     }
   };
 
+  const rehacer = () => {
+    setIsLoading(true); 
+    handleFetchQuestions(pdfText, questionCount)
+  }
 
+  const handleCancelar = () => {
+    setQuestions([]);
+    setIsOpen(true);
+    setQuestionCount(0);
+    setFiles([])
+  }
   return(
 
     <>
@@ -206,16 +220,33 @@ const NewForms = () => {
                 </AccordionDetails>
             </Accordion>
             ))}
+            <ButtonGroup variant="text" aria-label="small button group" className="flex items-center justify-center">
 
-            <Button 
-              variant="contained" 
-              color="primary" 
-               
-              onClick={handleSaveQuestions}
-              className="!my-2"
-            >
-              Guardar Preguntas
-            </Button>
+              <Button 
+                color="primary" 
+                
+                onClick={handleSaveQuestions}
+                className="!my-2"
+              >
+                Guardar Preguntas
+              </Button>
+              <Button 
+                color="secondary" 
+                
+                onClick={rehacer}
+                className="!my-2"
+              >
+                Rehacer
+              </Button>
+              <Button 
+                color="error" 
+                
+                onClick={handleCancelar}
+                className="!my-2"
+              >
+                Cancelar
+              </Button>
+            </ButtonGroup>
           </div>
         </div>
       ) :

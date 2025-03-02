@@ -47,3 +47,61 @@ export const GET_USER_FORMS = gql`
     }
     }
 `;
+
+export const DELETE_USER_FORMS = gql`
+    mutation DeleteFormById($id: ID!) {
+    deleteFormById(_id: $id)
+    }
+
+`;
+
+export const GET_GAME_ID_BY_PIN = gql`
+query GetGameIdByPin($pin: String!) {
+  getGameIdByPin(pin: $pin)
+}
+`;
+
+
+export const GET_QUESTIONS = gql`
+  query Forms {
+    forms {
+      name
+      createdAt
+      questions {
+        text
+        createdAt
+        options {
+          text
+          isAnswer
+          createdAt
+        }
+      }
+    }
+  }
+`;
+
+export const UPDATE_GAME_BY_PIN = gql`
+mutation Mutation($pin: String!, $nick: String!) {
+  updateGameByPin(pin: $pin, nick: $nick) {
+    player {
+      score
+      nick
+    }
+    game {
+      title
+      pin
+      _id
+      isRunning
+      leaderboard {
+        _id
+        email
+        nick
+        score
+        finish
+        createdAt
+        updatedAt
+      }
+    }
+  }
+}
+`;
