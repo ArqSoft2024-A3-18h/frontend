@@ -3,24 +3,24 @@ import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// const socket = io('http://localhost:7000'); 
+const socket = io('http://localhost:7000'); 
 
 const Leaderboard = () => {
   const [data, setData] = useState([]);
   const [previousData, setPreviousData] = useState([]); // Guardamos el estado anterior para comparar
 
-  // useEffect(() => {
-  //   // Escucha actualizaciones del servidor WebSocket
-  //   socket.on('updateLeaderboard', (newData) => {
-  //     setPreviousData(data); // Guardamos los datos actuales antes de actualizar
-  //     setData(newData); // Actualizamos con los nuevos datos
-  //   });
+  useEffect(() => {
+    // Escucha actualizaciones del servidor WebSocket
+    socket.on('updateLeaderboard', (newData) => {
+      setPreviousData(data); // Guardamos los datos actuales antes de actualizar
+      setData(newData); // Actualizamos con los nuevos datos
+    });
 
-  //   // Limpieza al desmontar el componente
-  //   return () => {
-  //     socket.off('updateLeaderboard');
-  //   };
-  // }, [data]);
+    // Limpieza al desmontar el componente
+    return () => {
+      socket.off('updateLeaderboard');
+    };
+  }, [data]);
 
   // Colores para las filas
   const rowColors = ['#FF4DF5', '#00E676', '#00EFFF', '#FF4D4D'];

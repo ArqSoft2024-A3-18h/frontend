@@ -36,7 +36,7 @@ const style = {
   flexDirection: "column"
 };
 
-const Game = ({ questions }) => {
+const Game = ({ questions, showLeaderboard }) => {
 
   const {pin} = useParams()
   const images = ['/icons/circle.svg', '/icons/square.svg', '/icons/triangle.svg', '/icons/x.svg'];
@@ -59,7 +59,10 @@ const Game = ({ questions }) => {
   const timerRef = useRef(null);
 
   useEffect(() => {
-    startTimer();
+    if(!showLeaderboard && !showResults){
+      startTimer();
+
+    }
     return () => clearInterval(timerRef.current);
   }, [currentQuestionIndex]);
 
@@ -70,7 +73,10 @@ const Game = ({ questions }) => {
       setProgress((prev) => {
         if (prev <= 0) {
           clearInterval(timerRef.current);
-          handleTimeOut();
+          if(!showLeaderboard && !showResults){
+            handleTimeOut();
+          }
+          
           return 0;
         }
         return prev - 2; // Disminuye gradualmente sin saltos
@@ -153,7 +159,7 @@ const Game = ({ questions }) => {
   }, [currentQuestion]);
   return (
     <div className="flex flex-row">
-       {!showResults ? <div className={`question-screen w-3/4 ${showPopup ? 'blur-background' : ''}`}>
+       {(!showResults && !showLeaderboard)  ? <div className={`question-screen w-3/4 ${showPopup ? 'blur-background' : ''}`}>
         <Box sx={{ width: '100%', marginBottom: '20px' }}>
           <WhiteLinearProgress variant="determinate" value={progress} />
         </Box>
@@ -176,7 +182,7 @@ const Game = ({ questions }) => {
           ))}
         </div>
       </div> : null}
-      <div className={`${showResults ? 'w-full' : 'w-1/4'}`}>
+      <div className={`${(showResults | showLeaderboard)  ? 'w-full' : 'w-1/4'}`}>
           <Leaderboard></Leaderboard>
       </div>
       {true && (
