@@ -36,7 +36,7 @@ const AdminGamePreviewPage: React.FC = () => {
         console.log("Juego iniciado:", data.startGame.game);
 
         // Redirigir a la página del juego si es necesario
-        navigate(`/game/start/${pin}`);
+        navigate(`/my/game/leaderboard/${pin}`);
       }
     } catch (err) {
       console.error("Error al iniciar el juego:", err);
