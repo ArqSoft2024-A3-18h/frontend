@@ -4,8 +4,8 @@ import Forms from "../pages/Forms";
 import NewForms from "../pages/NewForms";
 import GameContainer from "../pages/GameContainer";
 import CreateGame from "../pages/CreateGame";
-import Leaderboard from "../components/Leaderboard";
 import AdminGamePreviewPage from "../pages/AdminGamePreviewPage";
+import AdminLeaderboardPage from "../pages/AdminLeaderboardPage";
 
 const Router = () => {
     
@@ -16,7 +16,7 @@ const Router = () => {
             <Route path='forms/new' element={<NewForms/>}/>
             <Route path='games/new' element={<CreateGame/>}/>
             <Route path="/game/preview/:pin" element={<AdminGamePreviewPage/>}/>
-            <Route path="/game/leaderboard/:pin" element={<Leaderboard/>}/>
+            <Route path="/game/leaderboard/:pin" element={<AdminLeaderboardPage/>}/>
         </Routes>
         </>
     )
