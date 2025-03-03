@@ -30,7 +30,6 @@ function GameContainer() {
   const [showStartScreen, setShowStartScreen] = useState(true);
   // Usar la consulta con Apollo Client
   const formId = localStorage.getItem("formId"); 
-console.log("formId ",formId);
 
   const { loading, error, data } = useQuery(GET_QUESTIONS, {
     variables: { id: formId },

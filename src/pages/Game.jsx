@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import './Game.css'; // Importa estilos
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
@@ -6,6 +6,8 @@ import { styled } from '@mui/material/styles';
 import { useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { SEND_ANSWER } from '../utils/queries';
+import Leaderboard from '../components/Leaderboard';
+import { Modal, Typography } from '@mui/material';
 
 // Barra superior del tiempo (5 segundos inicialmente)
 const WhiteLinearProgress = styled(LinearProgress)({
@@ -16,6 +18,23 @@ const WhiteLinearProgress = styled(LinearProgress)({
     backgroundColor: '#EDD555', // Color del progreso
   },
 });
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  borderRadius: "8px",
+  p: 4,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexDirection: "column"
+};
 
 const Game = ({ questions }) => {
 
@@ -96,6 +115,7 @@ const Game = ({ questions }) => {
     }, 1000);
   };
 
+
   const sendAnswerToServer = async (answerIsCorrect, points) => {
     const playerId = localStorage.getItem('playerId');
 
@@ -128,10 +148,12 @@ const Game = ({ questions }) => {
   };
 
   const currentQuestion = questions[currentQuestionIndex];
-
+  const shuffledOptions = useMemo(() => {
+    return [...currentQuestion.options].sort(() => Math.random() - 0.5);
+  }, [currentQuestion]);
   return (
-    <div className="app-container">
-      <div className={`question-screen ${showPopup | showResults ? 'blur-background' : ''}`}>
+    <div className="flex flex-row">
+       {!showResults ? <div className={`question-screen w-3/4 ${showPopup ? 'blur-background' : ''}`}>
         <Box sx={{ width: '100%', marginBottom: '20px' }}>
           <WhiteLinearProgress variant="determinate" value={progress} />
         </Box>
@@ -139,7 +161,7 @@ const Game = ({ questions }) => {
         <h1 className="question-title">{currentQuestion.text}</h1>
 
         <div className="answers-container">
-          {currentQuestion.options.map((option, index) => (
+        {shuffledOptions.map((option, index) => (
             <button
               key={option._id}
               className="answer-button"
@@ -153,24 +175,24 @@ const Game = ({ questions }) => {
             </button>
           ))}
         </div>
+      </div> : null}
+      <div className={`${showResults ? 'w-full' : 'w-1/4'}`}>
+          <Leaderboard></Leaderboard>
       </div>
-
-      {showPopup && (
-        <div className="popup">
-          <img src={popupImage} alt="imagen" width="300px" />
-          <p>{popupMessage}</p>
-        </div>
+      {true && (
+        <Modal
+          open={showPopup}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <img src={popupImage} alt="imagen" width="300px" />
+            <Typography>{popupMessage}</Typography>
+            
+          </Box>
+        </Modal>
       )}
-
-      {/* {showResults && (
-        <div className="results-modal">
-          <h2>¡Juego terminado!</h2>
-          <p>Respuestas correctas: {correctAnswers}</p>
-          <p>Respuestas incorrectas: {incorrectAnswers}</p>
-          <button onClick={() => window.location.reload()}>Jugar de nuevo</button>
-        </div>
-      )} */}
-
+      
     </div>
   );
 };
