@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://github.com/ArqSoft2024-A3-18h/frontend",
+  "homepage": "https://github.com/juligarji/wizz-quizz",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
