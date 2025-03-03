@@ -123,7 +123,7 @@ function HomePage() {
         <div className="bg-black bg-opacity-50 p-8 rounded-lg shadow-md text-center">
           <h1 className="text-2xl font-bold mb-4 text-white">WizQuizz</h1>
           <input
-            type="number"
+            type="text"
             className="w-full px-4 py-2 border border-gray-300 rounded-md mb-4 bg-black bg-opacity-50 text-white placeholder-gray-400"
             placeholder="Código del juego"
           />
