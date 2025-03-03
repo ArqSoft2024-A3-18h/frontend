@@ -6,8 +6,8 @@ const GamePreviewPage: React.FC = () => {
   // Obtener el parámetro `pin` de la URL
   const { pin } = useParams<{ pin: string }>();
   const location = useLocation();
-  const { nickname, leaderboard } = location.state || {};
-  console.log('leader ', leaderboard)
+  const { nickname, leaderboard, formId } = location.state || {};
+  console.log('leader ', leaderboard, formId)
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-black p-4">
       {/* Título */}

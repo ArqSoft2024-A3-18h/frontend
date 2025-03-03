@@ -62,23 +62,6 @@ query GetGameIdByPin($pin: String!) {
 `;
 
 
-export const GET_QUESTIONS = gql`
-  query Forms {
-    forms {
-      name
-      createdAt
-      questions {
-        text
-        createdAt
-        options {
-          text
-          isAnswer
-          createdAt
-        }
-      }
-    }
-  }
-`;
 
 export const UPDATE_GAME_BY_PIN = gql`
 mutation Mutation($pin: String!, $nick: String!) {
@@ -86,6 +69,7 @@ mutation Mutation($pin: String!, $nick: String!) {
     player {
       score
       nick
+      _id
     }
     game {
       title
@@ -101,7 +85,19 @@ mutation Mutation($pin: String!, $nick: String!) {
         createdAt
         updatedAt
       }
+      formId
     }
+  }
+}
+`;
+
+export const  SEND_ANSWER = gql`
+mutation SendAnswer($gamePin: String!, $playerId: ID!, $answerIsCorrect: Boolean!, $points: Int!) {
+  sendAnswer(gamePin: $gamePin, playerId: $playerId, answerIsCorrect: $answerIsCorrect, points: $points) {
+    score
+    nick
+    _id
+    finish
   }
 }
 `;
