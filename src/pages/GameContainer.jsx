@@ -26,6 +26,8 @@ const GET_QUESTIONS = gql`
 
 
 function GameContainer() {
+  const location = useLocation();
+  const formId = location.state?.formId;
   const [showStartScreen, setShowStartScreen] = useState(true);
   const location = useLocation()
   const formsId = location.state?.formsId ?? '67c4b02491ab86b726f52a90';
