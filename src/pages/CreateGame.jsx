@@ -61,7 +61,7 @@ const CreateGame = () => {
             if (data?.createGame) {
                 console.log("Juego creado:", data.createGame);
                 navigate(`/my/game/preview/${data.createGame.pin}`);
-                navigate(`/game/${data.createGame.pin}`, { state: { formId: formId } });
+                navigate(`/game/${data.createGame.pin}`);
             }
         } catch (err) {
             console.error("Error al crear el juego:", err);

@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import Game from "./Game";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 const GET_QUESTIONS = gql`
   query GetFormById($id: ID) {
@@ -27,14 +27,14 @@ const GET_QUESTIONS = gql`
 
 function GameContainer() {
   const location = useLocation();
-  const formId = location.state?.formId;
   const [showStartScreen, setShowStartScreen] = useState(true);
-  const location = useLocation()
-  const formsId = location.state?.formsId ?? '67c4b02491ab86b726f52a90';
   // Usar la consulta con Apollo Client
+  const formId = localStorage.getItem("formId"); 
+console.log("formId ",formId);
+
   const { loading, error, data } = useQuery(GET_QUESTIONS, {
-    variables: { id: formsId },
-    skip: !formsId,
+    variables: { id: formId },
+    skip: !formId,
   });
   const [questions, setQuestions] = useState([]);
   const [title, setTitle] = useState([]);
