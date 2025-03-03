@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const socket = io('http://localhost:7000'); 
+const socket = io('ws://98.84.21.219:8000');
 
 const Leaderboard = () => {
   const [data, setData] = useState([]);

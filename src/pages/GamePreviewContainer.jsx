@@ -3,7 +3,7 @@ import GamePreviewPage from "./GamePreviewPage";
 import { io } from "socket.io-client";
 import { useNavigate, useParams } from "react-router-dom";
 
-const socket = io('http://localhost:8080'); 
+const socket = io('ws://98.84.21.219:8000'); 
 const   GamePreviewContainer = () => {
     const [game, setGame] = useState({});
     const { pin } = useParams(); // Obtiene el pin desde la URL

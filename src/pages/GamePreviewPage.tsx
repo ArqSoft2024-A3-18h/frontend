@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 
-const SOCKET_SERVER_URL = 'wss://ws.postman-echo.com/raw'; 
+const SOCKET_SERVER_URL = 'ws://98.84.21.219:8000'; 
 
 const GamePreviewPage: React.FC = () => {
   const { pin } = useParams<{ pin: string }>();

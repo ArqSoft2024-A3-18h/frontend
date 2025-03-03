@@ -25,7 +25,7 @@ const GET_QUESTIONS = gql`
 }
 `;
 
-const socket = io("http://localhost:9000");
+const socket = io("ws://98.84.21.219:8000");
 function GameContainer() {
   const location = useLocation();
   const { pin } = useParams();
