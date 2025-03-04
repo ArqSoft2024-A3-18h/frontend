@@ -10,6 +10,8 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import GameContainer from "./pages/GameContainer";
 import GamePreviewContainer from "./pages/GamePreviewContainer";
+import { SocketProvider } from "./utils/SocketContext";
+
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -36,6 +38,7 @@ function App() {
    */
   const isLogged = true;
   return (
+    <SocketProvider> {/* Agregamos el proveedor de sockets */}
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <div className="app">
@@ -60,6 +63,7 @@ function App() {
         </BrowserRouter>
       </div>
     </ThemeProvider>
+    </SocketProvider>
   );
 }
 

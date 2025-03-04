@@ -21,10 +21,11 @@ const NicknamePage = () => {
       if (data) {
         const playerId = data.updateGameByPin.player._id;
         const formId =  data.updateGameByPin.game.formId;
+        console.log('data.updateGameByPin ', data.updateGameByPin)
         localStorage.setItem("playerId", playerId);
         localStorage.setItem("formId", formId);
         navigate(`/game/preview/${pin}`,{ state: {
-          nickname,
+          nick: nickname,
           leaderboard: data.updateGameByPin.game.leaderboard
         }});
       }

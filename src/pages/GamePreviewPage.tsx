@@ -2,31 +2,51 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
+import { useSocket } from '../utils/SocketContext';
 
-const SOCKET_SERVER_URL = 'wss://ws.postman-echo.com/raw'; 
 
 const GamePreviewPage: React.FC = () => {
+  const { socket } = useSocket();
   const { pin } = useParams<{ pin: string }>();
   const location = useLocation();
   const { leaderboard, formId } = location.state || {};
 
   const [players, setPlayers] = useState<string[]>([]); // Lista de jugadores
 
-  useEffect(() => {
-    const socket = io(SOCKET_SERVER_URL);
+  // useEffect(() => {
+  //   if (!socket) return;
+  //   // Unirse al canal del juego con el pin
+    
 
-    // Unirse al canal del juego con el pin
-    socket.emit('joinGame', pin);
+  //   socket.on("updateLeaderboard", (data) => {
+  //     console.log("✅ Evento recibido en GamePreviewPage:", data);
+  //     setPlayers((prevPlayers) => [...prevPlayers, data.player]); 
+  //   });
+    
+  //   return () => {
+  //     socket.off("game-event"); // Limpiar conexión cuando el componente se desmonta
+  //   };
+  // }, [socket]);
 
-    // Escuchar cuando un nuevo jugador se une
-    socket.on('playerJoined', (newPlayer: string) => {
-      setPlayers((prevPlayers) => [...prevPlayers, newPlayer]); // Agregar jugador a la lista
-    });
+  // useEffect(()=> {
+  //   if (!socket) return;
+  //   socket.emit('joingame', pin);
+  // },[])
 
-    return () => {
-      socket.disconnect(); // Limpiar conexión cuando el componente se desmonta
-    };
-  }, [pin]);
+  // useEffect(() => {
+  //   if (!socket) return;
+  
+  //   const handleUpdateLeaderboard = (data) => {
+  //     console.log("✅ Evento recibido en GamePreviewPage:", data);
+  //     setPlayers((prevPlayers) => [...prevPlayers, data.player]);
+  //   };
+  
+  //   socket.on("updateLeaderboard", handleUpdateLeaderboard);
+  
+  //   return () => {
+  //     socket.off("updateLeaderboard", handleUpdateLeaderboard); // ✅ Desuscripción correcta
+  //   };
+  // }, [socket]);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-black p-4">
